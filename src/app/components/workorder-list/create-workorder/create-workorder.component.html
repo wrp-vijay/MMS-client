@@ -1,0 +1,115 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Work Orders</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Work Orders</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{ workOrderId ? 'Edit Work Order' : 'Add Work Order' }}</h5>
+      </div>
+        <div class="card-body">
+          <form [formGroup]="workOrderForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group mt-2">
+              <label for="productId">Product</label>
+              <select id="productId" formControlName="productId" class="form-control"
+                [ngClass]="{'is-invalid': workOrderForm.get('productId')?.invalid && (workOrderForm.get('productId')?.dirty || workOrderForm.get('productId')?.touched)}">
+                <option value="">Select Product</option>
+                <option *ngFor="let product of readyGoods" [value]="product.id">
+                  {{ product.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="workOrderForm.get('productId')?.invalid && (workOrderForm.get('productId')?.dirty || workOrderForm.get('productId')?.touched)"
+                class="invalid-feedback">
+                Product is required.
+              </div>
+            </div>
+
+            <div class="form-group mt-2">
+              <label for="quantity">Quantity</label>
+              <input type="number" id="quantity" formControlName="quantity" class="form-control"
+                [ngClass]="{'is-invalid': workOrderForm.get('quantity')?.invalid && (workOrderForm.get('quantity')?.dirty || workOrderForm.get('quantity')?.touched)}" />
+              <div
+                *ngIf="workOrderForm.get('quantity')?.invalid && (workOrderForm.get('quantity')?.dirty || workOrderForm.get('quantity')?.touched)"
+                class="invalid-feedback">
+                Quantity is required and must be at least 1.
+              </div>
+            </div>
+
+            <div class="form-group mt-2">
+              <label for="deliveryDate">Delivery Date</label>
+              <input type="date" id="deliveryDate" formControlName="deliveryDate" class="form-control"
+                [ngClass]="{'is-invalid': workOrderForm.get('deliveryDate')?.invalid && (workOrderForm.get('deliveryDate')?.dirty || workOrderForm.get('deliveryDate')?.touched)}" />
+              <div
+                *ngIf="workOrderForm.get('deliveryDate')?.invalid && (workOrderForm.get('deliveryDate')?.dirty || workOrderForm.get('deliveryDate')?.touched)"
+                class="invalid-feedback">
+                Delivery Date is required.
+              </div>
+            </div>
+
+            <!-- Raw Materials Section -->
+            <div class="form-group mt-2 mr-3">
+              <label for="rawMaterials">
+                <h4>Raw Materials</h4>
+              </label>
+              <div formArrayName="rawMaterials">
+                <div *ngFor="let rawMaterial of rawMaterialsArray.controls; let i=index" [formGroupName]="i"
+                  class="d-flex align-items-center mb-2">
+                  <select formControlName="productId" class="form-control mr-2"
+                    [ngClass]="{'is-invalid': rawMaterial.get('productId')?.invalid && (rawMaterial.get('productId')?.dirty || rawMaterial.get('productId')?.touched)}">
+                    <option value="">Select Raw Material</option>
+                    <option *ngFor="let material of rawMaterials" [value]="material.id">
+                      {{ material.name }}
+                    </option>
+                  </select>
+                  <input type="number" formControlName="quantity" class="form-control mr-2"
+                    [ngClass]="{'is-invalid': rawMaterial.get('quantity')?.invalid && (rawMaterial.get('quantity')?.dirty || rawMaterial.get('quantity')?.touched)}" />
+                  <div
+                    *ngIf="rawMaterial.get('quantity')?.invalid && (rawMaterial.get('quantity')?.dirty || rawMaterial.get('quantity')?.touched)"
+                    class="invalid-feedback">
+                    Quantity is required and must be at least 1.
+                  </div>
+                  <button type="button" class="btn btn-danger" (click)="removeRawMaterial(i)">Remove</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary" (click)="addRawMaterial()">Add Raw Material</button>
+            </div>
+
+
+            <div class="form-group mt-2">
+              <label for="notes">Notes</label>
+              <textarea id="notes" formControlName="notes" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group mt-2">
+              <label for="status">Status</label>
+              <select id="status" formControlName="status" class="form-control"
+                [ngClass]="{'is-invalid': workOrderForm.get('status')?.invalid && (workOrderForm.get('status')?.dirty || workOrderForm.get('status')?.touched)}">
+                <option value="">Select Status</option>
+                <option *ngFor="let status of statuses" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+              <div
+                *ngIf="workOrderForm.get('status')?.invalid && (workOrderForm.get('status')?.dirty || workOrderForm.get('status')?.touched)"
+                class="invalid-feedback">
+                Status is required.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="workOrderForm.invalid">{{ workOrderId ? 'Update Work Order' : 'Submit Work Order'}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

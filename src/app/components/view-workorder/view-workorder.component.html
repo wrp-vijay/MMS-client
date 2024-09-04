@@ -1,0 +1,58 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Work Order</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Work Order</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container mt-4">
+      <div *ngIf="workOrder" class="workorder-details">
+        <h2 class="mb-4">Work Order Details</h2>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title mb-3">Work Order ID: {{ workOrder.id }}</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Product name:</strong> {{ workOrder.Product.name }}</p>
+                <p><strong>Quantity:</strong> {{ workOrder.quantity }}</p>
+                <p><strong>Order Date:</strong> {{ workOrder.createdAt | date }}</p>
+                <p><strong>Delivery Date:</strong> {{ workOrder.deliveryDate | date }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><strong>Status:</strong> <span class="badge bg-{{getStatusBadgeColor(workOrder.status)}}">{{ workOrder.status }}</span></p>
+                <p><strong>Notes:</strong> {{ workOrder.notes || 'No additional notes' }}</p>
+              </div>
+            </div>
+            <h3 class="mt-4 mb-3">Raw Materials</h3>
+            <ul class="list-group">
+              <li *ngFor="let material of workOrder.rawMaterials" class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <p class="mb-1"><strong>Raw Material:</strong> {{ material.name}}</p>
+                  <p class="mb-1"><strong>Quantity:</strong> {{ material.quantity }}</p>
+                </div>
+                <span class="badge bg-secondary rounded-pill">Material</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="copyright">
+      &copy; <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a>
+    </div>
+  </div>
+</footer><!-- End Footer -->

@@ -1,0 +1,70 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Manage Permission</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Manage permission</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="container mt-4">
+        <!-- Loading Indicator -->
+        <div *ngIf="isLoading" class="spinner-container d-flex justify-content-center align-items-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="ms-3">Loading...</p>
+        </div>
+      
+        <!-- Content -->
+        <div *ngIf="!isLoading">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Manage Roles</h3>
+            <button routerLink="/add-role" class="btn btn-primary">Add Role</button>
+          </div>
+          <table class="table table-bordered mt-3">
+            <thead class="thead-dark">
+              <tr>
+                <th>Role</th>
+                <th *ngFor="let slug of permissionSlugs">{{ slug }}</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let role of roles; trackBy: trackByIndex">
+                <td>{{ role.name }}</td>
+                <td *ngFor="let slug of permissionSlugs">
+                  <div *ngFor="let action of permissionActions">
+                    <label>
+                      <input type="checkbox" [checked]="getRolePermissionStatus(role.id, slug, action)"
+                             (change)="onCheckboxChange(role.id, slug, action, $event)">
+                      {{ action }}
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <button (click)="deleteRole(role.id)" class="btn btn-danger">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="updateAllPermissions()" class="btn btn-success mt-3">Update All Permissions</button>
+        </div>
+      </div>
+      
+    </section>
+</main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+  </footer><!-- End Footer -->

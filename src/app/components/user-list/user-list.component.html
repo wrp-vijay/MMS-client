@@ -1,0 +1,80 @@
+<!-- src/app/components/user-list/user-list.component.html -->
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>User List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Users</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="container mt-4">
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="text" class="form-control" [(ngModel)]="searchQuery" (input)="searchUsers()"
+                        placeholder="Search users...">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" routerLink="/add-user">Add User</button>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div *ngIf="isLoading" class="spinner-container d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="ms-3">Loading...</p>
+            </div>
+
+            <table *ngIf="!isLoading && users.length > 0" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>City</th>
+                        <th>Role</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; trackBy: trackByIndex">
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.mobile }}</td>
+                        <td>{{ user.city }}</td>
+                        <td>{{ user.role }}</td>
+                        <td><img [src]="user.image ? 'path/to/images/' + user.image : 'path/to/default-image.jpg'"
+                                alt="User Image" width="100"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm mx-2"  (click)="editUser(user.id)">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div *ngIf="!isLoading && users.length === 0" class="text-center">
+                <p *ngIf="errorMessage">{{ errorMessage }}</p>
+                <p *ngIf="!errorMessage">No data found</p>
+            </div>
+
+            <div class="pagination-controls">
+                <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1"><i class="bi bi-caret-left-fill"></i></button>
+                <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages"><i class="bi bi-caret-right-fill"></i></button>
+            </div>
+        </div>
+    </section>
+</main>

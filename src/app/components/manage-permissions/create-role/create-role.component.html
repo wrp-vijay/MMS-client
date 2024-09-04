@@ -1,0 +1,65 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Create Role</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Create role</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="role-creation">
+      <h3>Create New Role</h3>
+      <form (ngSubmit)="createRole()">
+        <div class="form-group">
+          <label for="roleName">Role Name:</label>
+          <input id="roleName" [(ngModel)]="newRole.name" name="name" required class="form-control" />
+        </div>
+        <label><b>Permissions:</b></label>
+        <hr>
+        <div class="permissions-table">
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Controller</th>
+                  <th>Create</th>
+                  <th>Read</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let slug of permissionSlugs">
+                  <td>{{ slug }}</td>
+                  <td><input type="checkbox" [checked]="isActionSelected(slug, 'create')"
+                      (change)="onNewRoleCheckboxChange(slug, 'create', $event)" /></td>
+                  <td><input type="checkbox" [checked]="isActionSelected(slug, 'read')"
+                      (change)="onNewRoleCheckboxChange(slug, 'read', $event)" /></td>
+                  <td><input type="checkbox" [checked]="isActionSelected(slug, 'update')"
+                      (change)="onNewRoleCheckboxChange(slug, 'update', $event)" /></td>
+                  <td><input type="checkbox" [checked]="isActionSelected(slug, 'delete')"
+                      (change)="onNewRoleCheckboxChange(slug, 'delete', $event)" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Role</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer id="footer" class="footer">
+  <div class="copyright">
+    &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+  </div>
+  <div class="credits">
+    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</footer>

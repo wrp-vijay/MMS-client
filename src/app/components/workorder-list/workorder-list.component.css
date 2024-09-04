@@ -1,0 +1,36 @@
+.badge {
+    padding: 0.5em;
+    border-radius: 0.25em;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .Pending {
+    background-color: orange;
+  }
+  
+  .Cutting {
+    background-color: blue;
+  }
+  
+  .Sewing {
+    background-color: purple;
+  }
+  
+  .Printing {
+    background-color: teal;
+  }
+  
+  .CheckQuality {
+    background-color: yellow;
+    color: black; /* Yellow badge needs black text for better readability */
+  }
+  
+  .Complete {
+    background-color: green;
+  }
+  
+  .default {
+    background-color: gray;
+  }
+  

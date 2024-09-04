@@ -1,0 +1,143 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Orders</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Orders</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+
+    <section class="section dashboard">
+        <div class="container mt-4">
+            <!-- Loading Spinner -->
+            <div *ngIf="loading" class="d-flex justify-content-center mt-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{{ orderId ? 'Edit Order' : 'Add Order' }}</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+                        <!-- User ID Field -->
+                        <!-- <div class="form-group mb-3">
+                            <label for="userId">User ID</label>
+                            <input id="userId" type="text" class="form-control" formControlName="userId">
+                            <div *ngIf="orderForm.get('userId')?.invalid && (orderForm.get('userId')?.touched || orderForm.get('userId')?.dirty)"
+                                class="text-danger">
+                                User ID is required.
+                            </div>
+                        </div> -->
+
+                        <!-- Delivery Date Field -->
+                        <div class="form-group mb-3">
+                            <label for="deliveryDate">Delivery Date</label>
+                            <input id="deliveryDate" type="date" class="form-control" formControlName="deliveryDate">
+                            <div *ngIf="orderForm.get('deliveryDate')?.invalid && (orderForm.get('deliveryDate')?.touched || orderForm.get('deliveryDate')?.dirty)"
+                                class="text-danger">
+                                Delivery Date is required.
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address Field -->
+                        <div class="form-group mb-3">
+                            <label for="shippingAddress">Shipping Address</label>
+                            <input id="shippingAddress" type="text" class="form-control"
+                                formControlName="shippingAddress">
+                            <div *ngIf="orderForm.get('shippingAddress')?.invalid && (orderForm.get('shippingAddress')?.touched || orderForm.get('shippingAddress')?.dirty)"
+                                class="text-danger">
+                                Shipping Address is required.
+                            </div>
+                        </div>
+
+                        <!-- Status Field -->
+                        <div class="form-group mb-3">
+                            <label for="status">Status</label>
+                            <select id="status" class="form-control" formControlName="status">
+                                <option value="Pending">Pending</option>
+                                <option value="OnProcess">OnProcess</option> <!-- Remove the space -->
+                                <option value="Delivered">Delivered</option>
+                                <option value="UnderCreation">UnderCreation</option> <!-- Remove the space -->
+                                <option value="Process">Process</option>
+                            </select>
+                        </div>
+
+
+                        <!-- Items FormArray -->
+                        <div formArrayName="items">
+                            <div *ngIf="items.invalid && items.touched" class="text-danger mb-3">
+                                At least one item is required.
+                            </div>
+                            <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="mb-3">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="product">Product</label>
+                                        <select id="product" class="form-control" formControlName="productId">
+                                            <option *ngFor="let product of products" [value]="product.id">{{
+                                                product.name }}</option>
+                                        </select>
+                                        <div *ngIf="item.get('productId')?.invalid && (item.get('productId')?.touched || item.get('productId')?.dirty)"
+                                            class="text-danger">
+                                            Product is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="quantity">Quantity</label>
+                                        <input id="quantity" type="number" class="form-control"
+                                            formControlName="quantity">
+                                        <div *ngIf="item.get('quantity')?.invalid && (item.get('quantity')?.touched || item.get('quantity')?.dirty)"
+                                            class="text-danger">
+                                            Quantity is required and must be at least 1.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="unitPrice">Unit Price</label>
+                                        <input id="unitPrice" type="number" class="form-control"
+                                            formControlName="unitPrice">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="totalPrice">Total Price</label>
+                                        <input id="totalPrice" type="number" class="form-control"
+                                            formControlName="totalPrice">
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-end">
+                                        <button type="button" class="btn btn-danger"
+                                            (click)="removeItem(i)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-3" (click)="addItem()">Add Item</button>
+
+                        <!-- Total Amount Field -->
+                        <div class="form-group mb-3">
+                            <label for="totalAmount">Total Amount</label>
+                            <input id="totalAmount" type="text" class="form-control" formControlName="totalAmount"
+                                readonly>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success mt-3">{{ orderId ? 'Update Order' : 'Submit Order'
+                            }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<footer id="footer" class="footer">
+    <div class="copyright">
+        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</footer><!-- End Footer -->

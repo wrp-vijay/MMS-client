@@ -1,0 +1,37 @@
+.permissions-table {
+    margin-top: 20px;
+  }
+  
+  .permissions-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .permissions-table th, .permissions-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .permissions-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .permissions-table td input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+  
+  .btn {
+    margin-top: 20px;
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  

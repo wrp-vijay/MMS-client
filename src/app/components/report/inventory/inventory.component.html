@@ -1,0 +1,78 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Inventory</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Inventory</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  
+    <section class="section dashboard">
+      <div class="container mt-4">
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="d-flex justify-content-center mt-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+  
+        <!-- Report Generation -->
+        <div *ngIf="!loading" class="mb-4">
+          <div *ngIf="hasPermission('REPORT', 'create')" class="row">
+            <div class="col">
+              <label for="startDate" class="form-label">Start Date:</label>
+              <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" placeholder="Start Date">
+            </div>
+            <div class="col">
+              <label for="endDate" class="form-label">End Date:</label>
+              <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" placeholder="End Date">
+            </div>
+            <div class="col-auto d-flex align-items-end">
+              <button class="btn btn-primary w-100" (click)="generateReport()">Generate Report</button>
+            </div>
+          </div>
+  
+          <!-- Download Button -->
+          <div *ngIf="showDownloadButton" class="mb-4 mt-3">
+            <button class="btn btn-secondary w-100" (click)="downloadReport()">Download Report</button>
+          </div>
+        </div>
+  
+        <!-- Content -->
+        <div *ngIf="!loading">
+          <div class="row mb-3">
+            <div class="col">
+              <input type="text" class="form-control" [(ngModel)]="searchQuery" (input)="searchOrders()"
+                placeholder="Search inventory...">
+            </div>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>History ID</th>
+                <th>Product ID</th>
+                <th>Change Date</th>
+                <th>Quantity Change</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inventory of filteredInventory; trackBy: trackByIndex">
+                <td>{{ inventory.id }}</td>
+                <td>{{ inventory.productId }}</td>
+                <td>{{ inventory.changeDate | date }}</td>
+                <td>{{ inventory.quantityChange }}</td>
+                <td>{{ inventory.note }}</td>
+              </tr>
+              <tr *ngIf="filteredInventory.length === 0">
+                <td colspan="5" class="text-center">No inventory records found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+  

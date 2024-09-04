@@ -1,0 +1,66 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Edit Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Edit Profile</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container mt-4">
+      <div class="role-creation">
+        <h3>Edit Profile</h3>
+        <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input id="firstName" class="form-control" formControlName="firstName" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input id="lastName" class="form-control" formControlName="lastName" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" formControlName="email" type="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" formControlName="password" type="password" />
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobile:</label>
+            <input id="mobile" class="form-control" formControlName="mobile" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="city">City:</label>
+            <input id="city" class="form-control" formControlName="city" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="role">Role:</label>
+            <input id="role" class="form-control" formControlName="role" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="image">Profile Image:</label>
+            <input id="image" (change)="onImageChange($event)" type="file" />
+            <div *ngIf="profileImageUrl" class="mt-2">
+              <img [src]="profileImageUrl" alt="Profile Image" class="img-thumbnail" style="max-width: 150px;">
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Update Profile</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="footer" class="footer">
+  <div class="copyright">
+    &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+  </div>
+  <div class="credits">
+    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</footer><!-- End Footer -->

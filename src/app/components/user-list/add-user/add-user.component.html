@@ -1,0 +1,127 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>{{ userId ? 'Edit User' : 'Add User' }}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">{{ userId ? 'Edit User' : 'Add User' }}</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{{ userId ? 'Edit User' : 'Add User' }}</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                        <!-- First Name Field -->
+                        <div class="form-group mb-3">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+                            <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched"
+                                class="text-danger">
+                                First name is required.
+                            </div>
+                        </div>
+
+                        <!-- Last Name Field -->
+                        <div class="form-group mb-3">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" formControlName="lastName">
+                            <div *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched"
+                                class="text-danger">
+                                Last name is required.
+                            </div>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" formControlName="email">
+                            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                                class="text-danger">
+                                Valid email is required.
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" formControlName="password"
+                                placeholder="{{ userId ? 'Leave blank to keep current password' : '' }}">
+
+                            <!-- Display message only in edit mode -->
+                            <small *ngIf="userId" class="form-text text-muted">
+                                Leave blank to keep the current password.
+                            </small>
+
+                            <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+                                class="text-danger">
+                                Password is required.
+                            </div>
+                        </div>
+
+
+                        <!-- Mobile Field -->
+                        <div class="form-group mb-3">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" id="mobile" class="form-control" formControlName="mobile">
+                            <div *ngIf="userForm.get('mobile')?.invalid && userForm.get('mobile')?.touched"
+                                class="text-danger">
+                                Mobile number is required.
+                            </div>
+                        </div>
+
+                        <!-- City Field -->
+                        <div class="form-group mb-3">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-control" formControlName="city">
+                            <div *ngIf="userForm.get('city')?.invalid && userForm.get('city')?.touched"
+                                class="text-danger">
+                                City is required.
+                            </div>
+                        </div>
+
+                        <!-- Role Field -->
+                        <div class="form-group mb-3">
+                            <label for="role">Role</label>
+                            <select id="role" class="form-control" formControlName="role">
+                                <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
+                            </select>
+                            <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched"
+                                class="text-danger">
+                                Role is required.
+                            </div>
+                        </div>
+
+
+                        <!-- Image URL Field -->
+                        <div class="form-group mb-3">
+                            <label for="image">Image URL</label>
+                            <input type="text" id="image" class="form-control" formControlName="image">
+                        </div>
+
+                        <!-- Submit and Cancel Buttons -->
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">{{ userId ? 'Update' : 'Add' }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="copyright">
+        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</footer><!-- End Footer -->

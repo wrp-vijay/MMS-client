@@ -1,0 +1,41 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Products</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Products</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container">
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center mt-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="product-list">
+        <button *ngIf="hasPermission('PRODUCT', 'create')" class="btn btn-primary mb-4" routerLink="/products/create">
+          Add Products
+        </button>
+        <div class="product-cards">
+          <div *ngFor="let product of products" class="product-card">
+            <div class="product-info">
+              <h3>{{ product.name }}</h3>
+              <p class="product-price">${{ product.price }}</p>
+              <p>Stock: {{ product.stockQuentity }}</p>
+              <p class="product-description">{{ product.description }}</p>
+              <button *ngIf="hasPermission('PRODUCT', 'update')" (click)="editProduct(product.id)"
+                class="edit-btn btn btn-primary mx-2">Edit</button>
+              <button *ngIf="hasPermission('PRODUCT', 'delete')" (click)="confirmDelete(product.id)"
+                class="delete-btn btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

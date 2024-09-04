@@ -1,0 +1,29 @@
+.profile-image-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.form-group.row {
+    margin-bottom: 1rem;
+}
+
+.form-group.row label {
+    text-align: right;
+}
+
+.form-group.row .col-sm-9 {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-file {
+    margin-top: 0.5rem;
+}

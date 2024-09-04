@@ -1,0 +1,102 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Order</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Order</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container mt-4">
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center mt-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Report Generation -->
+      <div *ngIf="!loading" class="mb-4">
+        <div *ngIf="hasPermission('REPORT', 'create')" class="row">
+          <div class="col">
+            <label for="startDate" class="form-label">Start Date:</label>
+            <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" placeholder="Start Date">
+          </div>
+          <div class="col">
+            <label for="endDate" class="form-label">End Date:</label>
+            <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" placeholder="End Date">
+          </div>
+          <div class="col-auto d-flex align-items-end">
+            <button class="btn btn-primary w-100" (click)="generateReport()">Generate Report</button>
+          </div>
+        </div>
+
+        <!-- Download Button -->
+        <div *ngIf="showDownloadButton" class="mb-4 mt-3">
+          <button class="btn btn-secondary w-100" (click)="downloadReport()">Download Report</button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div *ngIf="!loading">
+        <div class="row mb-3">
+          <div class="col">
+            <input type="text" class="form-control" [(ngModel)]="searchQuery" (input)="searchOrders()"
+              placeholder="Search orders...">
+          </div>
+          <div class="col-auto d-flex align-items-end">
+            <button *ngIf="hasPermission('ORDER', 'create')" class="btn btn-primary" (click)="addOrder()">Add
+              Order</button>
+          </div>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Order Date</th>
+              <th>Shipping Address</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of filteredOrders; trackBy: trackByIndex">
+              <td>{{ order.id }}</td>
+              <td>{{ order.User.firstName }} {{ order.User.lastName }}</td>
+              <td>{{ order.deliveryDate | date }}</td>
+              <td>{{ order.shippingAddress }}</td>
+              <td>{{ order.totalAmount | currency }}</td>
+              <td>
+                <span [ngClass]="[getStatusBadgeColor(order.status), 'badge']">
+                  {{ order.status }}
+                </span>
+              </td>              
+              <td>
+                <button *ngIf="hasPermission('ORDER', 'read')" class="btn btn-info btn-sm mx-1" (click)="viewOrder(order.id)">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button *ngIf="hasPermission('ORDER', 'update') && order.status !== 'Delivered'"  class="btn btn-warning btn-sm mx-1" (click)="editOrder(order.id)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button *ngIf="hasPermission('ORDER', 'delete')" class="btn btn-danger btn-sm mx-1" (click)="confirmDelete(order.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <button *ngIf="!canCreateWorkOrder(order)" class="btn btn-success btn-sm mx-1" (click)="createWorkOrder(order.id)">
+                  Create Work Order
+                </button>
+              </td>              
+            </tr>
+            <tr *ngIf="filteredOrders.length === 0">
+              <td colspan="7" class="text-center">No orders found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

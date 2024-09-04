@@ -1,0 +1,102 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Products</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Report</li>
+        <li class="breadcrumb-item active">Products</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section dashboard">
+    <div class="container">
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center mt-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Report Generation -->
+      <div *ngIf="!loading" class="mb-4">
+        <div *ngIf="hasPermission('REPORT', 'create')" class="row">
+          <div class="col">
+            <label for="startDate">Start Date:</label>
+            <input id="startDate" type="date" class="form-control" [(ngModel)]="startDate" placeholder="Start Date">
+          </div>
+          <div class="col">
+            <label for="endDate">End Date:</label>
+            <input id="endDate" type="date" class="form-control" [(ngModel)]="endDate" placeholder="End Date">
+          </div>
+          <div class="col-auto d-flex align-items-end">
+            <button class="btn btn-primary" (click)="generateReport()">Generate Report</button>
+          </div>
+        </div>
+        <!-- Download Button -->
+        <div *ngIf="showDownloadButton" class="mb-4 mt-3">
+          <button class="btn btn-secondary" (click)="downloadReport()">Download Report</button>
+        </div>
+
+        <div class="col">
+          <input type="text" class="form-control" [(ngModel)]="searchQuery" (input)="searchProducts()"
+            placeholder="Search orders...">
+        </div>
+      </div>
+
+      <!-- Products Table -->
+      <div *ngIf="!loading">
+        <table class="table table-bordered">
+          <thead>
+            <ng-container *ngIf="!showMostSellingProducts">
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Product Type</th>
+                <th>Description</th>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="showMostSellingProducts">
+              <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity Sold</th>
+              </tr>
+            </ng-container>
+          </thead>
+          <tbody>
+            <!-- General Products Data -->
+            <ng-container *ngIf="!showMostSellingProducts">
+              <tr *ngFor="let product of filteredProducts; trackBy: trackByIndex">
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stockQuentity }}</td>
+                <td>{{ product.productType }}</td>
+                <td>{{ product.description }}</td>
+              </tr>
+            </ng-container>
+            
+            <!-- Most Selling Products Data -->
+            <ng-container *ngIf="showMostSellingProducts">
+              <tr *ngFor="let product of mostSellingProducts; trackBy: trackByIndex">
+                <td>{{ product.productId }}</td>
+                <td>{{ product.productName}}</td>
+                <td>{{ product.quantitySold }}</td>
+              </tr>
+            </ng-container>
+            
+            <!-- No Data Available Message -->
+            <tr *ngIf="!showMostSellingProducts && filteredProducts?.length === 0">
+              <td colspan="5" class="text-center">No products available.</td>
+            </tr>
+            <tr *ngIf="showMostSellingProducts && mostSellingProducts?.length === 0">
+              <td colspan="3" class="text-center">No report data available.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
