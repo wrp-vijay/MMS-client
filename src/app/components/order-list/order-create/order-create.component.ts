@@ -82,7 +82,7 @@ export class OrderCreateComponent implements OnInit {
           totalAmount: order.totalAmount.toString(),  // Convert to string
           status: order.status
         });
-  
+
         this.items.clear();
         order.OrderItems.forEach(item => {
           this.addItem(item);
@@ -145,11 +145,17 @@ export class OrderCreateComponent implements OnInit {
     this.orderForm.get('totalAmount')!.setValue(roundedTotalAmount);
   }
   
-  
-
   removeItem(index: number): void {
     this.items.removeAt(index);
     this.updateTotalAmount();
+  }
+
+  private handleInsufficientStockItems(items: any[]): void {
+    // This method will handle displaying insufficient stock items
+    items.forEach(item => {
+      // Example: Display a message or update the form based on stock issues
+      this.toastr.warning(`Product ID ${item.productId} has insufficient stock. Available: ${item.availableStock}, Requested: ${item.requestedQuantity}`, 'Insufficient Stock');
+    });
   }
 
   onSubmit(): void {
@@ -163,13 +169,23 @@ export class OrderCreateComponent implements OnInit {
     const orderData = this.orderForm.getRawValue();
     if (this.orderId) {
       this.productService.updateOrder(this.orderId, orderData).subscribe(
-        () => {
-          this.toastr.success('Order updated successfully.');
-          this.router.navigate(['/orders']);
+        (response:any) => {
+          if (response.error) {
+            // Handle the case where insufficient stock is reported
+            if (response.insufficientStockItems && response.insufficientStockItems.length > 0) {
+              this.handleInsufficientStockItems(response.insufficientStockItems);
+            } else {
+              this.toastr.success('Order updated successfully.');
+              this.router.navigate(['/orders']);
+            }
+          } else {
+            this.toastr.success('Order updated successfully.');
+            this.router.navigate(['/orders']);
+          }
           this.loading = false;
         },
-        error => {
-          this.toastr.error('Failed to update order.');
+        (error:any) => {
+          this.toastr.error(error.error.msg);
           this.loading = false;
         }
       );
@@ -180,12 +196,11 @@ export class OrderCreateComponent implements OnInit {
           this.router.navigate(['/orders']);
           this.loading = false;
         },
-        error => {
-          this.toastr.error('Failed to create order.');
+        (error:any) => {
+          this.toastr.error(error.error.msg);
           this.loading = false;
         }
       );
     }
   }
 }
-

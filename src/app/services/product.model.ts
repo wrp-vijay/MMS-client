@@ -10,6 +10,7 @@ export interface Product {
   }
   
   export interface Order {
+    insufficientStockItems: any;
     id: number;
     userId: string;
     orderId: number;
@@ -33,6 +34,7 @@ id: any;
   }
   
   export interface OrderItem {
+    isInStock: boolean;
     id: number;
     orderId: number;
     productId: number;

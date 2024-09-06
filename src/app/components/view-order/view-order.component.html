@@ -1,54 +1,49 @@
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Order</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
-          <li class="breadcrumb-item active">Order</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-  
-    <section class="section dashboard">
-      <div class="container mt-4">
-        <div *ngIf="order" class="order-details">
-          <h2 class="mb-4">Order Details</h2>
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Order ID: {{ order.id }}</h4>
-              <!-- <p class="card-text"><strong>User Name:</strong> {{ order.User.firstName }} {{ order.User.lastName }}</p> -->
-              <p class="card-text"><strong>Delivery Date:</strong> {{ order.deliveryDate | date }}</p>
-              <p class="card-text"><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
-              <p class="card-text"><strong>Total Amount:</strong> ${{ order.totalAmount }}</p>
-              <p class="card-text"><strong>Status:</strong> {{ order.status }}</p>
-              
-              <h3 class="mt-4 mb-3">Order Items:</h3>
-              <ul class="list-group">
-                <li *ngFor="let item of order.OrderItems" class="list-group-item">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h5 class="mb-1 product-name">{{ item.Product.name }}</h5>
-                      <p class="mb-1"><strong>Quantity:</strong> {{ item.quantity }}</p>
-                      <p class="mb-1"><strong>Unit Price:</strong> ${{ item.unitPrice }}</p>
-                      <p class="mb-0"><strong>Total Price:</strong> ${{ item.totalPrice }}</p>
-                    </div>
-                    <span class="badge bg-primary rounded-pill">Product</span>
+  <div class="pagetitle">
+    <h1>Order</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Order</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="container mt-4">
+      <div *ngIf="order" class="order-details">
+        <h2 class="mb-4">Order Details</h2>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Order ID: {{ order.id }}</h4>
+            <p class="card-text"><strong>Delivery Date:</strong> {{ order.deliveryDate | date }}</p>
+            <p class="card-text"><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
+            <p class="card-text"><strong>Total Amount:</strong> ${{ order.totalAmount }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ order.status }}</p>
+
+            <h3 class="mt-4 mb-3">Order Items:</h3>
+            <ul class="list-group">
+              <li *ngFor="let item of order.OrderItems" class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="mb-1 product-name">{{ item.Product.name }}</h5>
+                    <p class="mb-1"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                    <p class="mb-1"><strong>Unit Price:</strong> ${{ item.unitPrice }}</p>
+                    <p class="mb-0"><strong>Total Price:</strong> ${{ item.totalPrice }}</p>
                   </div>
-                </li>
-              </ul>
-            </div>
+                  <span class="badge bg-primary rounded-pill">Product</span>
+                </div>
+              </li>
+            </ul>
+
+            <!-- Display button if stock is less than order quantity -->
+            <button *ngIf="canCreateWorkOrder  && hasPermission('ORDER', 'delete')" class="btn btn-success btn-sm mx-1" (click)="createWorkOrder(order.id)">
+              Create Work Order
+            </button>
+
           </div>
         </div>
       </div>
-    </section>
-  </main>
-  
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
     </div>
-    <div class="credits">
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+  </section>
+</main>

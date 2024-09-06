@@ -75,21 +75,21 @@
                 <span [ngClass]="[getStatusBadgeColor(order.status), 'badge']">
                   {{ order.status }}
                 </span>
-              </td>              
+              </td>
               <td>
-                <button *ngIf="hasPermission('ORDER', 'read')" class="btn btn-info btn-sm mx-1" (click)="viewOrder(order.id)">
+                <button *ngIf="hasPermission('ORDER', 'read')" class="btn btn-info btn-sm mx-1"
+                  (click)="viewOrder(order.id)">
                   <i class="bi bi-eye"></i>
                 </button>
-                <button *ngIf="hasPermission('ORDER', 'update') && order.status !== 'Delivered'"  class="btn btn-warning btn-sm mx-1" (click)="editOrder(order.id)">
+                <button *ngIf="hasPermission('ORDER', 'update') && order.status !== 'Delivered'"
+                  class="btn btn-warning btn-sm mx-1" (click)="editOrder(order.id)">
                   <i class="bi bi-pencil-square"></i>
                 </button>
-                <button *ngIf="hasPermission('ORDER', 'delete')" class="btn btn-danger btn-sm mx-1" (click)="confirmDelete(order.id)">
+                <button *ngIf="hasPermission('ORDER', 'delete')" class="btn btn-danger btn-sm mx-1"
+                  (click)="confirmDelete(order.id)">
                   <i class="bi bi-trash"></i>
                 </button>
-                <button *ngIf="!canCreateWorkOrder(order)" class="btn btn-success btn-sm mx-1" (click)="createWorkOrder(order.id)">
-                  Create Work Order
-                </button>
-              </td>              
+              </td>
             </tr>
             <tr *ngIf="filteredOrders.length === 0">
               <td colspan="7" class="text-center">No orders found.</td>

@@ -56,23 +56,12 @@ export class OrderListComponent implements OnInit {
         this.loading = false;
         this.showDownloadButton = false;
       },
-      (error:any) => {
+      (error: any) => {
         this.toastr.error(error.error.msg);
         console.error('Error:', error);
         this.loading = false;
       }
     );
-  }
-
-  canCreateWorkOrder(order: Order): boolean {
-    return order.OrderItems.every(item => {
-      const product = this.orderService.getProductById(item.productId);
-      return product && item.quantity <= item.Product.stockQuentity;
-    });
-  }
-
-  createWorkOrder(orderId: number): void {
-    this.router.navigate(['/workorders/create', { orderId }]);
   }
 
   searchOrders(): void {
@@ -86,8 +75,6 @@ export class OrderListComponent implements OnInit {
     } else {
       this.filteredOrders = this.orders;
     }
-
-    this.showDownloadButton = this.filteredOrders.length > 0;
   }
 
   viewOrder(id: number): void {
@@ -137,7 +124,7 @@ export class OrderListComponent implements OnInit {
       case 'Delivered':
         return 'Delivered';
       case 'UnderCreation':
-        return 'UnderCreation';
+        return 'Under Creation';
       case 'Process':
         return 'Process';
       default:

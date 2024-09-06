@@ -54,10 +54,9 @@ export class WorkorderListComponent {
       },
       (error: any) => {
         this.toastr.error(error.error.msg);
-        console.error('Error:', error);
         this.loading = false;
         // Ensure filteredWorkOrders is empty when there's an error
-        this.filteredWorkOrders = [];
+        // this.filteredWorkOrders = [];
       }
     );
   }

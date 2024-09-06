@@ -48,6 +48,7 @@ export const routes: Routes = [
 
     { path: 'work-order', component: WorkorderListComponent, canActivate: [authGuard], data: { permission: 'read' } },
     { path: 'workorders/create', component: CreateWorkorderComponent, canActivate: [authGuard], data: { permission: 'create' } },
+    { path: 'workorders/create/:id', component: CreateWorkorderComponent, canActivate: [authGuard], data: { permission: 'create' } },
     { path: 'workorders/edit/:id', component: CreateWorkorderComponent },
     { path: 'view-workorder/:id', component: ViewWorkorderComponent },
 

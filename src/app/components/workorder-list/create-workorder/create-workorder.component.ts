@@ -18,7 +18,7 @@ export class CreateWorkorderComponent implements OnInit {
   readyGoods: any[] = [];
   rawMaterials: any[] = [];
   workOrderId: string | null = null;
-  statuses = [ 'Cutting', 'Sewing', 'Printing', 'Check quality'];
+  statuses = [ 'Pending','Cutting', 'Sewing', 'Printing', 'Check quality'];
 
   constructor(
     private fb: FormBuilder,
